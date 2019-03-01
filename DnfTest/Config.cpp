@@ -25,6 +25,7 @@ Config::Config()
 	configData.Get("loginFailTimes", loginFailTimes);
 	configData.Get("verification_account_code", verification_account_code);
 	configData.Get("verification_password", verification_password);
+	configData.Get("proxy_method", proxy_method);
 	LoadServerConfig();	
 }
 
@@ -43,6 +44,7 @@ void Config::SaveData()
 	root.Add("loginFailTimes", loginFailTimes);
 	root.Add("verification_account_code", verification_account_code);
 	root.Add("verification_password", verification_password);
+	root.Add("proxy_method", proxy_method);
 	neb::CJsonObject base;
 	base.Add("config", root);
 	common::PostConfig(common::stringToCString(base.ToString()));

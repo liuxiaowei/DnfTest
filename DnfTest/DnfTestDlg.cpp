@@ -393,6 +393,8 @@ bool CDnfTestDlg::SaveUIInfo()
 	config_instance.areaname = common::CStringTostring(csAreaName);
 	config_instance.loginFailTimes = m_EditRetry;
 	config_instance.ip_address = common::CStringTostring(m_EditLocalIP);
+	dlgIP.SaveData();
+	dlgVerificationCode.SaveData();
 	if(config_instance.game_path.size()==0){
 		AfxMessageBox("游戏路径不能为空");
 		return false;

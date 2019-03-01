@@ -57,6 +57,7 @@ public:
 	string areaname;
 	string verification_account_code;
 	string verification_password;
+	string proxy_method;
 	int loginFailTimes;//µÇÂ¼Ê§°ÜÖØÊÔ´ÎÊı
 	void SaveData();
 private:

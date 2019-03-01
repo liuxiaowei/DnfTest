@@ -62,11 +62,9 @@ BOOL DialogVerificationCode::OnInitDialog()
 void DialogVerificationCode::OnBnClickedButtonQuery()
 {
 	// TODO: 在此添加控件通知处理程序代码
-	UpdateData();
+	SaveData();
 	CString strRe = CVerificationCode::Ptr()->pGetUserInfo(accountCode, password);
 	GetDlgItem(IDC_STATIC_BALANCE)->SetWindowText(strRe+_T("积分"));
-	config_instance.verification_account_code = common::CStringTostring(accountCode);
-	config_instance.verification_password = common::CStringTostring(password);
 }
 
 
@@ -74,4 +72,11 @@ void DialogVerificationCode::OnBnClickedButtonRecharge()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	ShellExecute(0,NULL,_T("http://www.chaorendama.com/"),NULL,NULL,SW_NORMAL);
+}
+
+void DialogVerificationCode::SaveData()
+{
+	UpdateData();
+	config_instance.verification_account_code = common::CStringTostring(accountCode);
+	config_instance.verification_password = common::CStringTostring(password);
 }

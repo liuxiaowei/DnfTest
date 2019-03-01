@@ -44,7 +44,6 @@ void CGameControl::Stop()
 
 bool CGameControl::gameProcess()
 {
-	config_instance.SaveData();
 	Sleep(1000);
 	bool bSuccess = false;
 	int tryTimes = 0;
@@ -72,6 +71,7 @@ bool CGameControl::gameProcess()
 		killProcess("Client.exe");
 		killProcess("DNF.exe");
 	}
+	LOG_DEBUG<<"登录完成，登录结果 "<<bSuccess;
 	if(!bSuccess){
 		return findCurrentAccountIndex();
 	}
@@ -174,6 +174,7 @@ bool CGameControl::InputCodes()
 	if(bVerficationCode){
 		LOG_DEBUG<<"需要输入验证码";
 		int iTryTimes = 0;
+		bool bSuccess = false;
 		while(iTryTimes<=config_instance.loginFailTimes){
 			int verficationCodeTimes = 0;//验证码重试4次
 			while(findImageInLoginWnd("VerificationCode.png")&&verficationCodeTimes++<=4){
@@ -194,11 +195,18 @@ bool CGameControl::InputCodes()
 					}
 				}
 			}
+			if(verficationCodeTimes==4){
+				break;
+			}
+			Sleep(500);
+			//如果没有密码错误的图片，则认为密码输入对了，返回
 			if(findImageInLoginWnd("PassWordWrong.png")){
 				CKeyMouMng::Ptr()->MouseMoveAndClick(600,434);  //点击确认
 				Sleep(500);
 				iTryTimes++;
 				inputPasswordAndLogin();
+			}else{
+				return true;
 			}
 		}
 		if(iTryTimes==config_instance.loginFailTimes){
@@ -846,6 +854,7 @@ void CGameControl::resetIndex()
 
 void CGameControl::GameLoop()
 {
+	config_instance.SaveData();
 	if(m_Index >= config_instance.accounts.size()){
 		return;
 	}
@@ -898,19 +907,23 @@ BOOL CGameControl::killProcess(const string& processName)
 
 bool CGameControl::switchVPN()
 {
-	CVPNControler controler;
-	controler.clickOnSwitchButton();
-	auto Times(0);
-	while(Times++<=config_instance.ip_try_times){
-		Sleep(1000);
-		CString currentIP = CVPNControler::GetSystemIp();
-		LOG_DEBUG<<"ip "<<common::CStringTostring(currentIP).c_str();
-		if(currentIP.Compare(common::stringToCString(config_instance.ip_address))!=0&&m_LastIP.Compare(currentIP)!=0)
-		{
-			m_LastIP = currentIP;
-			PostMessage(m_hShow, WM_UPDATE_GAME_STATUS, (WPARAM)GAME_IP, (LPARAM)&m_LastIP);
-			return true;
+	if(config_instance.proxy_method == common::CStringTostring(ProxyEt)){
+		CVPNControler controler;
+		controler.clickOnSwitchButton();
+		auto Times(0);
+		while(Times++<=config_instance.ip_try_times){
+			Sleep(1000);
+			CString currentIP = CVPNControler::GetSystemIp();
+			LOG_DEBUG<<"ip "<<common::CStringTostring(currentIP).c_str();
+			if(currentIP.Compare(common::stringToCString(config_instance.ip_address))!=0&&m_LastIP.Compare(currentIP)!=0)
+			{
+				m_LastIP = currentIP;
+				PostMessage(m_hShow, WM_UPDATE_GAME_STATUS, (WPARAM)GAME_IP, (LPARAM)&m_LastIP);
+				return true;
+			}
 		}
+	}else{
+		return true;
 	}
 	return false;
 }

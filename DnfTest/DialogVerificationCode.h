@@ -27,4 +27,5 @@ public:
 	CString password;
 	afx_msg void OnBnClickedButtonQuery();
 	afx_msg void OnBnClickedButtonRecharge();
+	void SaveData();
 };
