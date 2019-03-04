@@ -14,7 +14,7 @@ namespace common{
 	vector<CString> SplitCString(CString strSource, CString ch);
 	string getMAC();
 	int QueryUser();
-	int RegisterUser();
+	int RegisterUser(const string& note);
 	string GetDefines();
 	void PostConfig(const CString& data);
 	string GetConfig();
@@ -27,4 +27,5 @@ namespace common{
 	void CreateDir(CString path);
 	BOOL DirectoryExist(const CString&path);
 	BOOL CreateDirectory(const CString&path);
+	CString TranslateString(const CString &csText);
 }

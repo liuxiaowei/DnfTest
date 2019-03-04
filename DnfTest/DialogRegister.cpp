@@ -5,6 +5,7 @@
 #include "DnfTest.h"
 #include "DialogRegister.h"
 #include "afxdialogex.h"
+#include "Common.h"
 
 
 // CDialogRegister 对话框
@@ -25,6 +26,7 @@ void CDialogRegister::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_EDIT_MAC, m_EditMac);
+	DDX_Control(pDX, IDC_EDIT_NOTE, EditNote);
 }
 
 
@@ -50,7 +52,9 @@ BOOL CDialogRegister::OnInitDialog()
 void CDialogRegister::OnBnClickedOk()
 {
 	// TODO: 在此添加控件通知处理程序代码
-	if(common::RegisterUser()==0){
+	CString note;
+	EditNote.GetWindowText(note);
+	if(common::RegisterUser(common::CStringTostring(note))==0){
 		AfxMessageBox("已经发送注册信息");
 	}
 	CDialogEx::OnOK();

@@ -6,6 +6,7 @@ public:
 	CGlobal(void);
 	~CGlobal(void);
 	string getMac();
+	string note;//ÓÃ»§±¸×¢
 	ControllerType getControllerType();
 	COLORREF getBackgroundColor();
 	COLORREF getButtonColor();

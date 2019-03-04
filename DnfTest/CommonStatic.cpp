@@ -132,18 +132,23 @@ namespace common{
 		string resp;
 		client.getData(ServerUrl+"/dnf/user/query", resp, &(string("mac:")+global_instance.getMac()), NULL);
 		neb::CJsonObject pt_root;
-		pt_root.Parse(resp);
+		pt_root.Parse(CStringTostring(TranslateString(common::stringToCString(resp))));
 		int status = 0;
 		auto pt_data = pt_root["data"];
 		pt_data.Get("status", status);
+		pt_data.Get("note", global_instance.note);
 		return status;
 	}
 
-	int RegisterUser()
+	int RegisterUser(const string& note)
 	{
 		CCurlInterface client;
 		string resp;
-		client.postData(ServerUrl+"/dnf/user/register", resp,&(string("mac:")+global_instance.getMac()), NULL);
+		//注册用户接口
+		neb::CJsonObject ptPost;
+		ptPost.Add("mac", global_instance.getMac());
+		ptPost.Add("note", note);
+		client.postData(ServerUrl+"/dnf/user/register", resp, NULL, &ptPost.ToString());
 		neb::CJsonObject pt_root;
 		pt_root.Parse(resp);
 		int status = 0;
@@ -151,15 +156,6 @@ namespace common{
 		pt_root.Get("data", pt_data);
 		pt_data.Get("status", status);
 		return status;
-	}
-	char* UnicodeToUtf8(const wchar_t* unicode)
-	{
-		int len;
-		len = WideCharToMultiByte(CP_UTF8, 0, unicode, -1, NULL, 0, NULL, NULL);
-		char *szUtf8 = (char*)malloc(len + 1);
-		memset(szUtf8, 0, len + 1);
-		WideCharToMultiByte(CP_UTF8, 0, unicode, -1, szUtf8, len, NULL, NULL);
-		return szUtf8;
 	}
 
 #define IS_NUMBER(c)        ((c) && (((c) >= '0' && (c) <= '9') || ((c) >= 'a' && (c) <= 'f') || ((c) >= 'A' && (c) <= 'F')))

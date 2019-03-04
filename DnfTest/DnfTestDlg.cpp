@@ -132,6 +132,7 @@ BOOL CDnfTestDlg::OnInitDialog()
 	((CMFCButton*)GetDlgItem(IDC_MFCBUTTON_TEST_PROFESSION))->SetFaceColor(global_instance.getButtonColor());
 	((CMFCButton*)GetDlgItem(IDC_MFCBUTTON_TEST_AREA))->SetFaceColor(global_instance.getButtonColor());
 	initControl();
+	SetWindowText("Hello kitty - " + common::stringToCString(global_instance.note));//即可
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
 

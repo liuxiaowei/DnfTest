@@ -21,6 +21,7 @@ protected:
 	DECLARE_MESSAGE_MAP()
 private:
 	CEdit m_EditMac;
+	CEdit EditNote;
 public:
 	virtual BOOL OnInitDialog();
 	afx_msg void OnBnClickedOk();
