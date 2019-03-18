@@ -323,10 +323,15 @@ bool CGameControl::createOneRole()
 		CKeyMouMng::Ptr()->MouseMoveAndClickGameWnd(178,548);  //点击创建角色
 		Sleep(1000);
 	}
-	//随机选择职业
 	SelectProfession();
 	m_RoleIndex++;
 	CKeyMouMng::Ptr()->MouseMoveAndClickGameWnd(691, 432);  //创建角色第二步
+	Sleep(1000);
+	while(findImageInGameWnd("RoleType.png"))
+	{
+		CKeyMouMng::Ptr()->MouseMoveAndClickGameWnd(300, 325);  //创建角色第点击角色类型
+		Sleep(1000);
+	}
 	Sleep(1000);
 	while(!findImageInGameWnd("NameCheckPass.png", 0.99, false))
 	{

@@ -87,4 +87,5 @@ private:
 public:
 	afx_msg void OnTcnSelchangeTabTool(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnEnChangeMfceditbrowseAccounts();
+	afx_msg void OnBnClickedButtonSkill();
 };

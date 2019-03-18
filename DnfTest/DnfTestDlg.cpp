@@ -80,6 +80,7 @@ BEGIN_MESSAGE_MAP(CDnfTestDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_MFCBUTTON_TEST_AREA, &CDnfTestDlg::OnBnClickedMfcbuttonTestArea)
 	ON_NOTIFY(TCN_SELCHANGE, IDC_TAB_TOOL, &CDnfTestDlg::OnTcnSelchangeTabTool)
 	ON_EN_CHANGE(IDC_MFCEDITBROWSE_ACCOUNTS, &CDnfTestDlg::OnEnChangeMfceditbrowseAccounts)
+	ON_BN_CLICKED(IDC_BUTTON_SKILL, &CDnfTestDlg::OnBnClickedButtonSkill)
 END_MESSAGE_MAP()
 
 
@@ -93,7 +94,15 @@ BOOL CDnfTestDlg::OnInitDialog()
 	//  执行此操作
 	SetIcon(m_hIcon, TRUE);			// 设置大图标
 	SetIcon(m_hIcon, FALSE);		// 设置小图标
+	char szTitle[8] = {0};
+	int i;
+	srand((unsigned)time(NULL));
+	for (i = 0; i < 6; i++)
+	{
+		szTitle[i] = 'a' + rand() % 26;
+	}
 
+	SetWindowText(common::stringToCString(szTitle));
 	// TODO: 在此添加额外的初始化代码
 	//初始化WinIo库
 	InitData();
@@ -132,7 +141,7 @@ BOOL CDnfTestDlg::OnInitDialog()
 	((CMFCButton*)GetDlgItem(IDC_MFCBUTTON_TEST_PROFESSION))->SetFaceColor(global_instance.getButtonColor());
 	((CMFCButton*)GetDlgItem(IDC_MFCBUTTON_TEST_AREA))->SetFaceColor(global_instance.getButtonColor());
 	initControl();
-	SetWindowText("Hello kitty - " + common::stringToCString(global_instance.note));//即可
+	GetDlgItem(IDC_STATIC_USERNAME)->SetWindowText("用户 - " + common::stringToCString(global_instance.note));
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
 
@@ -583,4 +592,11 @@ void CDnfTestDlg::OnEnChangeMfceditbrowseAccounts()
 	CFileParser fileParser;
 	fileParser.LoadData(Text);
 	refleshListCtrl();
+}
+
+
+void CDnfTestDlg::OnBnClickedButtonSkill()
+{
+	// TODO: 在此添加控件通知处理程序代码
+
 }
