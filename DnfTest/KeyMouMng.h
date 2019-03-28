@@ -113,6 +113,7 @@ public:
 	void MouseMoveAndClickGameWnd(int nX,int nY);
 	void InputByDD(const string& buffer);
 	int getKeyCode(const char & ch);
+	void RoleMoveRadom(int moveTime=500);//游戏角色随机移动
 public:
 	CDD dd ;  // DD 类 
 private:

@@ -39,6 +39,7 @@ private:
 	static void StartProcess(void* param);
 	static void StartInputCodes(void*param);
 	static void StartCreateRole(void*param);
+	static void StartFight(void*param);
 	void InitData();
 	void refleshListCtrl();
 	LRESULT OnUpdateGameStatus(WPARAM wParam, LPARAM lParam);
@@ -87,5 +88,7 @@ private:
 public:
 	afx_msg void OnTcnSelchangeTabTool(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnEnChangeMfceditbrowseAccounts();
-	afx_msg void OnBnClickedButtonSkill();
+	afx_msg void OnBnClickedMfcbuttonSkill();
+	afx_msg void OnBnClickedMfcbuttonRolePos();
+	afx_msg void OnBnClickedMfcbuttonFight();
 };

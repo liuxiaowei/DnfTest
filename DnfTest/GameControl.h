@@ -20,6 +20,8 @@ public:
 	void SelectArea();
 	void GameLoop();
 	void EndGame();
+	void FindRolePos();
+	void Fight();
 private:
 	void outputFile();
 	void resetIndex();
@@ -35,10 +37,16 @@ private:
 		OUT int& nX,OUT int& nY,bool bSave, bool bGray = true /*是否用灰度图比较*/);
 	IplImage* hBitmapToLpl(HBITMAP hBmp);
 	BOOL findImageInGameWnd(const string& image, float fSame = 0.7, bool bGray = true);
-	BOOL findImageInLoginWnd(const string& image);
+	BOOL findImageInLoginWnd(const string& image, float fSame = 0.5);
 	string createName(const unsigned int & count);
 	BOOL killProcess(const string& processName);
 	bool switchVPN();
+	Direction getNextStage();
+	void FightInAStage();//打一关
+	void FightInNextBoss();//打boss临近关卡
+	bool BossNext();
+	Direction getNextBoss();
+	void FightInBoss();//打Boss
 private:
 	HWND m_hShow;
 	int	m_Index;

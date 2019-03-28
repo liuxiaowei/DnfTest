@@ -282,7 +282,6 @@ void CKeyMouMng::Contra(int dual_X,int dual_Y)
 		MouseMoveTo(dual_X,dual_Y);
 		return;
 	}
-	srand((unsigned)time(NULL)); //初始化随机数种子
 	while(true)
 	{
 		if(factuX<dual_X){
@@ -326,6 +325,30 @@ void CKeyMouMng::MouseMoveTo(int dual_X,int dual_Y)
 	{
 		LOG_DEBUG<<"dd mouse move";
 		dd.DD_mov(dual_X, dual_Y);
+	}
+}
+
+void CKeyMouMng::RoleMoveRadom(int moveTime)
+{
+	srand((int)time(0));
+	int dir = rand()%4;
+	if(dir == Direction_LEFT){
+		CKeyMouMng::Ptr()->DirKeyDown(VK_LEFT);
+		Sleep(moveTime/2+rand()%moveTime);
+		CKeyMouMng::Ptr()->DirKeyUp(VK_LEFT);
+	}else if(dir == Direction_RIGHT){
+		CKeyMouMng::Ptr()->DirKeyDown(VK_RIGHT);
+		Sleep(moveTime/2+rand()%moveTime);
+		CKeyMouMng::Ptr()->DirKeyUp(VK_RIGHT);
+	}else if(dir == Direction_UP){
+		CKeyMouMng::Ptr()->DirKeyDown(VK_UP);
+		Sleep(moveTime/2+rand()%moveTime);
+		CKeyMouMng::Ptr()->DirKeyUp(VK_UP);
+
+	}else if(dir == Direction_DOWN){
+		CKeyMouMng::Ptr()->DirKeyDown(VK_DOWN);
+		Sleep(moveTime/2+rand()%moveTime);
+		CKeyMouMng::Ptr()->DirKeyUp(VK_DOWN);
 	}
 }
 
