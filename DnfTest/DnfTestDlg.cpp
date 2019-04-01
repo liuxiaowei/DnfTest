@@ -229,7 +229,7 @@ void CDnfTestDlg::StartCreateRole(void*param)
 void CDnfTestDlg::StartFight(void*param)
 {
 	CDnfTestDlg*pThis = (CDnfTestDlg*)param;
-	pThis->m_gameControl->Fight();
+	pThis->m_gameControl->FightLinDong();
 }
 
 void CDnfTestDlg::InitData()
