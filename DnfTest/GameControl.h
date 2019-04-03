@@ -48,14 +48,15 @@ private:
 	bool BossNext();
 	Direction getNextBoss();
 	void FightInBoss();//打Boss
-	void ScanAndGrabObjects();//扫描和收集物品
+	void ScanAndGrabObjects(const int& brick);//扫描和收集物品
 	void FightBrick(const int& brick, const Direction& dir);
-	void MoveTowards(const int& brick, const Direction& dir);
+	bool MoveTowards(const int& brick, const Direction& dir);
 private:
 	HWND m_hShow;
 	int	m_Index;
 	bool m_Stop;
 	int m_RoleIndex;
 	CString m_LastIP;
+	std::vector<CString> m_vecFiles;
 };
 
