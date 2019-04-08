@@ -334,18 +334,34 @@ void CKeyMouMng::RoleMoveRadom(int moveTime)
 	int dir = rand()%4;
 	if(dir == Direction_LEFT){
 		CKeyMouMng::Ptr()->DirKeyDown(VK_LEFT);
+		Sleep(50);
+		CKeyMouMng::Ptr()->DirKeyUp(VK_LEFT);
+		Sleep(100);
+		CKeyMouMng::Ptr()->DirKeyDown(VK_LEFT);
 		Sleep(moveTime/2+rand()%moveTime);
 		CKeyMouMng::Ptr()->DirKeyUp(VK_LEFT);
 	}else if(dir == Direction_RIGHT){
+		CKeyMouMng::Ptr()->DirKeyDown(VK_RIGHT);
+		Sleep(50);
+		CKeyMouMng::Ptr()->DirKeyUp(VK_RIGHT);
+		Sleep(100);
 		CKeyMouMng::Ptr()->DirKeyDown(VK_RIGHT);
 		Sleep(moveTime/2+rand()%moveTime);
 		CKeyMouMng::Ptr()->DirKeyUp(VK_RIGHT);
 	}else if(dir == Direction_UP){
 		CKeyMouMng::Ptr()->DirKeyDown(VK_UP);
+		Sleep(50);
+		CKeyMouMng::Ptr()->DirKeyUp(VK_UP);
+		Sleep(100);
+		CKeyMouMng::Ptr()->DirKeyDown(VK_UP);
 		Sleep(moveTime/2+rand()%moveTime);
 		CKeyMouMng::Ptr()->DirKeyUp(VK_UP);
 
 	}else if(dir == Direction_DOWN){
+		CKeyMouMng::Ptr()->DirKeyDown(VK_DOWN);
+		Sleep(50);
+		CKeyMouMng::Ptr()->DirKeyUp(VK_DOWN);
+		Sleep(100);
 		CKeyMouMng::Ptr()->DirKeyDown(VK_DOWN);
 		Sleep(moveTime/2+rand()%moveTime);
 		CKeyMouMng::Ptr()->DirKeyUp(VK_DOWN);

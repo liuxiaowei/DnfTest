@@ -1332,6 +1332,7 @@ void CGameControl::FightInBoss()
 	skills.push_back("f");
 	skills.push_back("g");
 	skills.push_back("h");
+	skills.push_back("y");
 	CKeyMouMng::Ptr()->RoleMoveRadom(800);
 	srand((int)time(0));
 	while(true){
@@ -1383,26 +1384,26 @@ void CGameControl::ScanAndGrabObjects(const int& brick)
 					}
 					continue;
 				}
-				posLevel.posY += 90;
+				posLevel.posY += 120;
 				posLevel.posX += 20;
 				auto distanceY = posLevel.posY-posObj.posY;
 				if( distanceY > 20){
 					CKeyMouMng::Ptr()->DirKeyDown(VK_UP);
-					Sleep(((float)distanceY)*5.9);
+					Sleep(((float)distanceY)*5.8);
 					CKeyMouMng::Ptr()->DirKeyUp(VK_UP);
 				}else if(distanceY < -20){
 					CKeyMouMng::Ptr()->DirKeyDown(VK_DOWN);
-					Sleep(((float)abs(distanceY))*5.9);
+					Sleep(((float)abs(distanceY))*5.8);
 					CKeyMouMng::Ptr()->DirKeyUp(VK_DOWN);
 				}
 				auto distanceX = posLevel.posX-posObj.posX;
 				if( distanceX > 20){
 					CKeyMouMng::Ptr()->DirKeyDown(VK_LEFT);
-					Sleep(((float)distanceX)*5.9);
+					Sleep(((float)distanceX)*5.8);
 					CKeyMouMng::Ptr()->DirKeyUp(VK_LEFT);
 				}else if(distanceX < -20){
 					CKeyMouMng::Ptr()->DirKeyDown(VK_RIGHT);
-					Sleep(((float)abs(distanceX))*5.9);
+					Sleep(((float)abs(distanceX))*5.8);
 					CKeyMouMng::Ptr()->DirKeyUp(VK_RIGHT);
 				}
 				CKeyMouMng::Ptr()->KeyboardButtonEx('x'-32);
@@ -1416,7 +1417,8 @@ void CGameControl::ScanAndGrabObjects(const int& brick)
 		{
 			break;
 		}
-		if(iTimes>=5){
+		if(iTimes>=5)
+		{
 			break;
 		}
 	}
@@ -1463,7 +1465,7 @@ void CGameControl::FightBrick(const int& brick, const Direction& dir)
 			break;
 		}
 		if(brick==0){
-			if(findImageInGameWnd("BrickOneDoor.png", 0.7)){
+			if(findImageInGameWnd("Brick1Open.png", 0.7)){
 				break;
 			}
 			if(findImageInGameWnd("Brick2.png")){
@@ -1512,6 +1514,9 @@ bool CGameControl::MoveTowards(const int& brick, const Direction& dir)
 				if(findImageInGameWnd(common::CStringTostring(passThroughImage))){
 					break;
 				}
+				if(iTimes++>=5){
+					CKeyMouMng::Ptr()->RoleMoveRadom(500);
+				}
 				if(posLevel.posX==0){//如果找不到人物的位置，则反方向挪动
 					CKeyMouMng::Ptr()->DirKeyDown(VK_RIGHT);
 					Sleep(1000);
@@ -1528,9 +1533,6 @@ bool CGameControl::MoveTowards(const int& brick, const Direction& dir)
 					posDoor.posY += 30;
 				}else{
 					posDoor.posY += 60;
-				}
-				if(iTimes++>=10){
-					CKeyMouMng::Ptr()->RoleMoveRadom(500);
 				}
 				if(posLevel.posY>posDoor.posY){
 					auto distanceY = posLevel.posY-posDoor.posY;
@@ -1577,7 +1579,7 @@ bool CGameControl::MoveTowards(const int& brick, const Direction& dir)
 				CKeyMouMng::Ptr()->DirKeyUp(VK_DOWN);
 				continue;
 			}
-			if(iTimes++>=10){
+			if(iTimes++>=5){
 				CKeyMouMng::Ptr()->RoleMoveRadom(500);
 			}
 			posDoor.posX += 30;
@@ -1630,14 +1632,14 @@ bool CGameControl::MoveTowards(const int& brick, const Direction& dir)
 			if(!findImageInGameWnd("Next.png")){
 				break;
 			}
+			if(iTimes++>=5){
+				CKeyMouMng::Ptr()->RoleMoveRadom(500);
+			}
 			if(posDoor.posX == 0){
 				CKeyMouMng::Ptr()->DirKeyDown(VK_RIGHT);
 				Sleep(1000);
 				CKeyMouMng::Ptr()->DirKeyUp(VK_RIGHT);
 				continue;
-			}
-			if(iTimes++>=10){
-				CKeyMouMng::Ptr()->RoleMoveRadom(500);
 			}
 			if(brick!=5&&brick!=6&&brick!=7){
 				posDoor.posY += 30;
@@ -1668,7 +1670,7 @@ bool CGameControl::MoveTowards(const int& brick, const Direction& dir)
 		}
 		CKeyMouMng::Ptr()->DirKeyUp(VK_RIGHT);
 	}
-	if(findImageInGameWnd(common::CStringTostring(passThroughImage), 0.5)){
+	if(findImageInGameWnd(common::CStringTostring(passThroughImage), 0.55)){
 		return true;
 	}
 	return false;
