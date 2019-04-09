@@ -479,29 +479,68 @@ void CGameControl::Fight()
 
 void CGameControl::FightLinDong()
 {
-	if(findImageInGameWnd("LingDong.png")){
-		CKeyMouMng::Ptr()->MouseMoveAndClickGameWnd(315,465);
-	}
-	Sleep(2000);
-	//定义副本的门口方向
-	Direction dirs[] = {Direction_LEFT, Direction_DOWN, Direction_LEFT, Direction_DOWN, Direction_DOWN, Direction_RIGHT, Direction_RIGHT, Direction_RIGHT};
-	for(auto i(0); i < 8; i++)
-	{
-		FightBrick( i, dirs[i]);
-		CString text;
-		text.Format(_T("战斗完成 ,关卡 %d, 方向 %d \n"), i, dirs[i]);
-		ScanAndGrabObjects(i);
-		TRACE(text);
-		if (!MoveTowards( i, dirs[i]))
-		{
-			text.Format(_T("关卡移动失败 ,关卡 %d"), i);
-			TRACE(text);
-			i--;
+	CKeyMouMng::Ptr()->MouseMoveAndClickGameWnd(10,10);
+	while(true){
+		Sleep(500);
+		CKeyMouMng::Ptr()->DirKeyDown(VK_LEFT);
+		while(!findImageInGameWnd("Select.png")){
+			Sleep(500);
 		}
-		text.Format(_T("移动完成 ,关卡 %d"), i);
-		TRACE(text);
+		Sleep(1000);
+		CKeyMouMng::Ptr()->DirKeyUp(VK_LEFT);
+		while(!findImageInGameWnd("LinDong.png", 0.5)){
+			CKeyMouMng::Ptr()->MouseMoveAndClickGameWnd(315,465);
+			Sleep(500);
+		}
+		while(!findImageInGameWnd("YongShi.png", 0.8, false)){
+			if(findImageInGameWnd("Right.png", 0.6, false)){
+				CKeyMouMng::Ptr()->DirKeyDown(VK_RIGHT);
+				Sleep(100);
+				CKeyMouMng::Ptr()->DirKeyUp(VK_RIGHT);
+				Sleep(500);
+
+			}else if(findImageInGameWnd("Left.png", 0.6, false)){
+				CKeyMouMng::Ptr()->DirKeyDown(VK_RIGHT);
+				Sleep(100);
+				CKeyMouMng::Ptr()->DirKeyUp(VK_RIGHT);
+				Sleep(500);
+			}
+		}
+		CKeyMouMng::Ptr()->MouseMoveAndClickGameWnd(315,465);
+		Sleep(2000);
+		FightBrickOne();
+		continue;
+		//定义副本的门口方向
+		Direction dirs[] = {Direction_LEFT, Direction_DOWN, Direction_LEFT, Direction_DOWN, Direction_DOWN, Direction_RIGHT, Direction_RIGHT, Direction_RIGHT};
+		for(auto i(0); i < 8; i++)
+		{
+			FightBrick( i, dirs[i]);
+			CString text;
+			text.Format(_T("战斗完成 ,关卡 %d, 方向 %d \n"), i, dirs[i]);
+			ScanAndGrabObjects(i);
+			TRACE(text);
+			if (!MoveTowards( i, dirs[i]))
+			{
+				text.Format(_T("关卡移动失败 ,关卡 %d"), i);
+				TRACE(text);
+				i--;
+			}
+			text.Format(_T("移动完成 ,关卡 %d"), i);
+			TRACE(text);
+			if(findImageInGameWnd("End.png")){
+				CKeyMouMng::Ptr()->MouseMoveAndClickGameWnd(668,148);
+				break;
+			}
+		}
+		if(findImageInGameWnd("ShiKongZhiMen.png")){
+			continue;
+		}else{
+			FightInBoss();
+		}
+		if(findImageInGameWnd("End.png")){
+			CKeyMouMng::Ptr()->MouseMoveAndClickGameWnd(668,148);		
+		}
 	}
-	FightInBoss();
 }
 
 void CGameControl::setAccountIndex(const int& index)
@@ -1212,7 +1251,7 @@ void CGameControl::FightInAStage()
 	skills.push_back("f");
 	skills.push_back("g");
 	skills.push_back("h");
-	CKeyMouMng::Ptr()->RoleMoveRadom(800);
+	CKeyMouMng::Ptr()->RoleMoveRandom(800);
 	srand((int)time(0));
 	while(true){
 		wsprintf(ImagePath, _T("%sMatchImage\\Game\\Next.png"), g_ExePath);
@@ -1333,7 +1372,7 @@ void CGameControl::FightInBoss()
 	skills.push_back("g");
 	skills.push_back("h");
 	skills.push_back("y");
-	CKeyMouMng::Ptr()->RoleMoveRadom(800);
+	CKeyMouMng::Ptr()->RoleMoveRandom(800);
 	srand((int)time(0));
 	while(true){
 		for (auto count(0); count < 8; count++)
@@ -1417,7 +1456,7 @@ void CGameControl::ScanAndGrabObjects(const int& brick)
 		{
 			break;
 		}
-		if(iTimes>=5)
+		if(iTimes++>=5)
 		{
 			break;
 		}
@@ -1457,6 +1496,8 @@ void CGameControl::FightBrick(const int& brick, const Direction& dir)
 	}else if(dir==Direction_DOWN){
 		dirOpen = "DownDoor.png";
 	}
+
+
 	srand((int)time(0));
 	while(true){
 		wsprintf(ImagePath, _T("%sMatchImage\\Game\\Next.png"), g_ExePath);
@@ -1471,6 +1512,9 @@ void CGameControl::FightBrick(const int& brick, const Direction& dir)
 			if(findImageInGameWnd("Brick2.png")){
 				break;
 			}
+		}
+		if(findImageInGameWnd("End.png")){
+			break;
 		}
 		for (auto count(0); count < 3; count++)
 		{
@@ -1514,8 +1558,8 @@ bool CGameControl::MoveTowards(const int& brick, const Direction& dir)
 				if(findImageInGameWnd(common::CStringTostring(passThroughImage))){
 					break;
 				}
-				if(iTimes++>=5){
-					CKeyMouMng::Ptr()->RoleMoveRadom(500);
+				if(iTimes++>=3){
+					CKeyMouMng::Ptr()->RoleMoveRandom(600);
 				}
 				if(posLevel.posX==0){//如果找不到人物的位置，则反方向挪动
 					CKeyMouMng::Ptr()->DirKeyDown(VK_RIGHT);
@@ -1580,7 +1624,7 @@ bool CGameControl::MoveTowards(const int& brick, const Direction& dir)
 				continue;
 			}
 			if(iTimes++>=5){
-				CKeyMouMng::Ptr()->RoleMoveRadom(500);
+				CKeyMouMng::Ptr()->RoleMoveRandom(600);
 			}
 			posDoor.posX += 30;
 			if(posLevel.posX==0){//如果找不到人物的位置，则反方向挪动
@@ -1633,7 +1677,7 @@ bool CGameControl::MoveTowards(const int& brick, const Direction& dir)
 				break;
 			}
 			if(iTimes++>=5){
-				CKeyMouMng::Ptr()->RoleMoveRadom(500);
+				CKeyMouMng::Ptr()->RoleMoveRandom(600);
 			}
 			if(posDoor.posX == 0){
 				CKeyMouMng::Ptr()->DirKeyDown(VK_RIGHT);
@@ -1676,3 +1720,103 @@ bool CGameControl::MoveTowards(const int& brick, const Direction& dir)
 	return false;
 }
 
+void CGameControl::FightBrickOne()
+{
+	//首先释放H技能
+	CKeyMouMng::Ptr()->KeyboardButtonEx('h'-32);
+	HWND hGame = GetGameWnd();
+	if (hGame == NULL) 
+		return;
+	CKeyMouMng::Ptr()->RoleFastMoveTowards(VK_LEFT);
+	Sleep(1500);
+	TCHAR ImagePath[MAX_PATH] = {0};
+	posInfo posNext;		
+	vector<string> skills;
+	skills.push_back("q");
+	skills.push_back("xxx");
+	skills.push_back("w");
+	skills.push_back("e");
+	skills.push_back("r");
+	skills.push_back("t");
+	skills.push_back("s");
+	skills.push_back("d");
+	skills.push_back("f");
+	skills.push_back("g");
+	skills.push_back("h");
+
+	srand((int)time(0));
+	while(true){
+		wsprintf(ImagePath, _T("%sMatchImage\\Game\\Next.png"), g_ExePath);
+		imageMatchFromHwnd(hGame,ImagePath,0.7,posNext.posX, posNext.posY,false, false);
+		if(posNext.posX>=700 &&posNext.posX <=800 && posNext.posY>=27 && posNext.posY<= 124){
+			break;
+		}
+		if(findImageInGameWnd("Brick1Open.png", 0.7)){
+			break;
+		}
+		if(findImageInGameWnd("Brick2.png")){
+			break;
+		}
+		for (auto count(0); count < 3; count++)
+		{
+			const string skill(skills.at(rand()%skills.size()));
+			for (auto i(0); i < skill.size(); i++)
+			{
+				CKeyMouMng::Ptr()->KeyboardButtonEx(skill.at(i)-32);
+				Sleep(50);
+			}
+		}
+		CKeyMouMng::Ptr()->KeyboardButtonEx('s'-32);
+		Sleep(50);
+	}
+	CKeyMouMng::Ptr()->DirKeyUp(VK_LEFT);
+	ScanAndGrabObjects(0);
+	MoveBrickOne();
+}
+
+void CGameControl::MoveBrickOne()
+{
+	HWND hGame = GetGameWnd();
+	if (hGame == NULL) 
+		return;
+	TCHAR ImageLevel[MAX_PATH] = {0};
+	CString passThroughImage;
+	passThroughImage.Format(_T("Brick%d.png"), 2);
+	posInfo posLevel;
+	wsprintf(ImageLevel, _T("%sMatchImage\\Game\\Level.png"), g_ExePath);
+	const int brickOneDoorY = 352;
+	while(true){
+		imageMatchFromHwnd(hGame,ImageLevel,0.6,posLevel.posX, posLevel.posY,false);
+		if(findImageInGameWnd(common::CStringTostring(passThroughImage))){
+			break;
+		}
+		if(posLevel.posY==0){//如果找不到人物的位置，则反方向挪动
+			CKeyMouMng::Ptr()->RoleFastMoveTowards(VK_RIGHT);
+			Sleep(300);
+			CKeyMouMng::Ptr()->DirKeyUp(VK_RIGHT);
+			continue;
+		}
+		if(posLevel.posY>brickOneDoorY){
+			auto distanceY = brickOneDoorY - posLevel.posY;
+			if( distanceY > 5){
+				CKeyMouMng::Ptr()->DirKeyDown(VK_UP);
+				Sleep(((float)distanceY)*5.9);
+				CKeyMouMng::Ptr()->DirKeyUp(VK_UP);
+			}else{
+				CKeyMouMng::Ptr()->RoleFastMoveTowards(VK_LEFT);
+				continue;
+			}
+		}else if(posLevel.posY<brickOneDoorY){
+			auto distanceY = brickOneDoorY-posLevel.posY;
+				if(distanceY > 5){
+				CKeyMouMng::Ptr()->DirKeyDown(VK_DOWN);
+					Sleep(((float)distanceY)*5.9);
+				CKeyMouMng::Ptr()->DirKeyUp(VK_DOWN);
+			}else{
+					CKeyMouMng::Ptr()->RoleFastMoveTowards(VK_LEFT);
+				continue;
+			}
+			}
+	}	
+	CKeyMouMng::Ptr()->DirKeyUp(VK_LEFT);
+}

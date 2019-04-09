@@ -51,6 +51,8 @@ private:
 	void ScanAndGrabObjects(const int& brick);//扫描和收集物品
 	void FightBrick(const int& brick, const Direction& dir);
 	bool MoveTowards(const int& brick, const Direction& dir);
+	void FightBrickOne();//第一关卡
+	void MoveBrickOne();//冲过第一关卡
 private:
 	HWND m_hShow;
 	int	m_Index;

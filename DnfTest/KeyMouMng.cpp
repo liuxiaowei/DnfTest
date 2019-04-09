@@ -328,7 +328,7 @@ void CKeyMouMng::MouseMoveTo(int dual_X,int dual_Y)
 	}
 }
 
-void CKeyMouMng::RoleMoveRadom(int moveTime)
+void CKeyMouMng::RoleMoveRandom(int moveTime)
 {
 	srand((int)time(0));
 	int dir = rand()%4;
@@ -366,5 +366,14 @@ void CKeyMouMng::RoleMoveRadom(int moveTime)
 		Sleep(moveTime/2+rand()%moveTime);
 		CKeyMouMng::Ptr()->DirKeyUp(VK_DOWN);
 	}
+}
+
+BOOL CKeyMouMng::RoleFastMoveTowards(BYTE VirtualKey)
+{
+	CKeyMouMng::Ptr()->DirKeyDown(VirtualKey);
+	Sleep(50);
+	CKeyMouMng::Ptr()->DirKeyUp(VirtualKey);
+	Sleep(100);
+	CKeyMouMng::Ptr()->DirKeyDown(VirtualKey);
 }
 
