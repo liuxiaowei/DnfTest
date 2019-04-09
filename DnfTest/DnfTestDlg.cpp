@@ -12,6 +12,7 @@
 #include "DialogRegister.h"
 #include "FileParser.h"
 #include "DialogDownloader.h"
+#include "KeyMouMng.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -80,7 +81,9 @@ BEGIN_MESSAGE_MAP(CDnfTestDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_MFCBUTTON_TEST_AREA, &CDnfTestDlg::OnBnClickedMfcbuttonTestArea)
 	ON_NOTIFY(TCN_SELCHANGE, IDC_TAB_TOOL, &CDnfTestDlg::OnTcnSelchangeTabTool)
 	ON_EN_CHANGE(IDC_MFCEDITBROWSE_ACCOUNTS, &CDnfTestDlg::OnEnChangeMfceditbrowseAccounts)
-	ON_BN_CLICKED(IDC_BUTTON_SKILL, &CDnfTestDlg::OnBnClickedButtonSkill)
+	ON_BN_CLICKED(IDC_MFCBUTTON_SKILL, &CDnfTestDlg::OnBnClickedMfcbuttonSkill)
+	ON_BN_CLICKED(IDC_MFCBUTTON_ROLE_POS, &CDnfTestDlg::OnBnClickedMfcbuttonRolePos)
+	ON_BN_CLICKED(IDC_MFCBUTTON_FIGHT, &CDnfTestDlg::OnBnClickedMfcbuttonFight)
 END_MESSAGE_MAP()
 
 
@@ -221,6 +224,12 @@ void CDnfTestDlg::StartCreateRole(void*param)
 	CDnfTestDlg*pThis = (CDnfTestDlg*)param;
 	pThis->m_gameControl->CreateRole();
 	pThis->m_gameControl->EndGame();
+}
+
+void CDnfTestDlg::StartFight(void*param)
+{
+	CDnfTestDlg*pThis = (CDnfTestDlg*)param;
+	pThis->m_gameControl->FightLinDong();
 }
 
 void CDnfTestDlg::InitData()
@@ -595,8 +604,29 @@ void CDnfTestDlg::OnEnChangeMfceditbrowseAccounts()
 }
 
 
-void CDnfTestDlg::OnBnClickedButtonSkill()
+void CDnfTestDlg::OnBnClickedMfcbuttonSkill()
 {
 	// TODO: 在此添加控件通知处理程序代码
+	CKeyMouMng::Ptr()->MouseMoveAndClickGameWnd(200, 200);
+	Sleep(500);
+	string skill = "xxxz";
+	for (auto index(0); index < skill.size(); index++)
+	{
+		CKeyMouMng::Ptr()->KeyboardButtonEx(skill.at(index)-32);
+		Sleep(400);
+	}
+}
 
+
+void CDnfTestDlg::OnBnClickedMfcbuttonRolePos()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	m_gameControl->FindRolePos();
+}
+
+
+void CDnfTestDlg::OnBnClickedMfcbuttonFight()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	_beginthread(CDnfTestDlg::StartFight, NULL, this);
 }

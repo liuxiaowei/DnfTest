@@ -17,6 +17,14 @@ enum GameStatus{
 	GAME_IP,//显示ip地址
 	GAME_IP_FAILED//切换IP失败
 };
+enum Direction{
+	Direction_LEFT = 0,
+	Direction_RIGHT,
+	Direction_UP,
+	Direction_DOWN,
+	Direction_NULL
+};
+
 const CString ProxyNull = _T("不使用代理");
 const CString ProxyEt = _T("ET代理软件");
 const string ServerUrl = "https://dnf.utomarket.com:9055";

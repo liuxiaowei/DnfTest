@@ -214,6 +214,7 @@
     <ClInclude Include="GameControl.h" />
     <ClInclude Include="Global.h" />
     <ClInclude Include="KeyMouMng.h" />
+    <ClInclude Include="MapPosition.h" />
     <ClInclude Include="MyLog.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
@@ -246,6 +247,7 @@
     <ClCompile Include="GameControl.cpp" />
     <ClCompile Include="Global.cpp" />
     <ClCompile Include="KeyMouMng.cpp" />
+    <ClCompile Include="MapPosition.cpp" />
     <ClCompile Include="MyLog.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

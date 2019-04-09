@@ -106,6 +106,7 @@ public:
 	void DirKeyDown(BYTE key);
 	void DirKeyUp(BYTE key);
 	BOOL KeyboardButtonEx(BYTE VirtualKey, int ControlVirtualKey = KEY_BLANK);
+	BOOL RoleFastMoveTowards(BYTE VirtualKey);//角色快速移动
 
 	void MouseMoveAndClick(int nX,int nY);
 	void MouseMoveInLoginWnd(int nX,int nY);
@@ -113,6 +114,7 @@ public:
 	void MouseMoveAndClickGameWnd(int nX,int nY);
 	void InputByDD(const string& buffer);
 	int getKeyCode(const char & ch);
+	void RoleMoveRandom(int moveTime=500);//游戏角色随机移动
 public:
 	CDD dd ;  // DD 类 
 private:

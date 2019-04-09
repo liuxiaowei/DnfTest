@@ -111,6 +111,9 @@
     <ClInclude Include="DialogDownloader.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="MapPosition.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DnfTest.cpp">
@@ -177,6 +180,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="DialogDownloader.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MapPosition.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

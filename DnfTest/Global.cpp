@@ -4,7 +4,7 @@
 
 CGlobal::CGlobal(void)
 {
-	control = DD;
+	control = CONTROL_WINDOWS_MESSAGE;
 }
 
 

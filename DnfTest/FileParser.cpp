@@ -53,10 +53,10 @@ void CFileParser::SaveData()
 		CStdioFile mFile;
 		if (mFile.Open( text+index->first, CFile::modeReadWrite|CFile::modeCreate))
 		{
+			CString content;
 			for ( auto account(config_instance.accounts.begin()); account != config_instance.accounts.end(); account++)
 			{
 				if(account->accountStatus == index->second){
-					CString content;
 					content.Append(common::stringToCString(account->qq));
 					content.Append(_T("||||"));
 					content.Append(common::stringToCString(account->password));
@@ -70,7 +70,8 @@ void CFileParser::SaveData()
 						}
 					}
 				}
-			}			
+			}
+			mFile.WriteString(content);
 			mFile.Close();
 		}
 	}
